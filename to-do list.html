@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<title>
+			Project01
+		</title>
+		<link rel="icon" href="https://www.adobe.com/content/dam/cc/us/en/products/illustrator/icon-design/desktop/SEO_single-app_icon-design_P1_819x413.jpg.img.jpg">
+		<style type="text/css">
+			
+			body
+			{
+				margin: 0px;
+				padding: 0px;
+				background-color: rgb(69, 76, 82);
+			}
+
+			/*This contains the everything*/
+			section
+			{
+				width: 600px;
+				height: 300px;
+				margin: 100px auto;
+				padding: 10px;
+				border: 1px solid;
+				border-radius: 30px;
+				background-color: rgb(194, 194, 194);
+			}
+
+			/*This contain the to do list text and the text field, add task button, and clear button*/
+			.box
+			{
+				text-align: center;
+				/*background-color: red;*/
+				padding: 10px;
+				font-family: cursive;
+				font-size: 20px;
+			}
+
+			/*This class select the box that contain the reminder buttons*/
+			.smallbox
+			{
+				/*make the green box have a small width*/
+				/*background-color: white;*/
+				width: 50%;
+				height: 50%;
+				margin: auto;
+				overflow: auto;
+			}
+
+			/*This class targets the buttons that are made when you enter a task*/
+			.newButton
+			{
+				/*give every button the same width*/
+				width: 87%;
+				border-radius: 3px;
+				border: 1px solid;
+			}
+
+
+		</style>
+	</head>
+	<body>
+		<section>
+			<div class="box">
+				<h1>To-Do List</h1>
+				<!-- This is the text fiel -->
+				<input type="text" id="textfield" value=" ">
+				<!-- This button takes the text in the text field and creates a button with it -->
+				<button type="button" onclick="createButton()" >Add Task</button>
+				<button type="button" onclick="clearButton()" >Hide</button>
+			</div>
+
+			<!-- This div containse the taks when they are buttons -->
+			<div class="smallbox">
+				<!-- this is where the task buttons are sent -->
+				<p id=textArea></p>
+			</div>
+		</section>
+
+		<script type="text/javascript">
+			//this array containse the task buttons
+			var array = [];
+			//this array containse the description of the butons that are in the first array
+			var arrayDescription =[];
+
+			//This function delete that exiting buttons and then creates a new button for all the elements in the first array to prevent the duplication of buttons
+			function replace()
+			{
+
+				document.getElementById("textArea").innerHTML = " ";
+				for (var i = 0; i <array.length; i++) 
+				{
+					var button = document.createElement("button");
+	                button.setAttribute("class", "newButton");
+	                button.setAttribute("onclick", "description("+i+")");
+					var buttontext = document.createTextNode((i+1) +"." + array[i]);
+					button.appendChild(buttontext);
+					document.getElementById("textArea").appendChild(button);
+
+					var dButton = document.createElement("button");
+                	dButton.setAttribute("onclick", "deleteButton("+i+")");
+					var dbuttontext = document.createTextNode("X");
+					dButton.appendChild(dbuttontext);
+					document.getElementById("textArea").appendChild(dButton);
+				}
+			}
+
+			// this fuction takes the text from the text field and prompt for the description
+			function createButton()
+			 {
+				var text =  document.getElementById("textfield").value;
+				//check if it as text or not
+				if(/\S/.test(text))
+				{
+					//use arrayDescription to promt a question for the description of the task
+					var description = prompt("Description");
+					array.push(text);
+					arrayDescription.push(description);
+					var dtext = array.toString();
+					// creates the buttons
+					replace();
+					document.getElementById("textfield").value=" ";
+				}
+				else
+				{
+					alert("there isn't any text")
+				}
+			}
+
+			function clearButton()
+			{
+				document.getElementById("textArea").innerHTML = " ";
+			}
+
+			// this function takes a number and delete the elements from the first array and it description from the second array 
+			function deleteButton(number)
+			{
+				var removed = array.splice(number, number+1);
+				var dremoved = arrayDescription.splice(number, number+1);
+				replace();
+			}
+
+			function description(number)
+			{
+				alert(arrayDescription[number]);
+			}
+		</script>
+	</body>
+</html>
